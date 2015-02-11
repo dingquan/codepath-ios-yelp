@@ -33,7 +33,17 @@ class BusinessTableViewCell: UITableViewCell {
             if let thumbnailUrl = self.business?.imageUrl {
                 self.thumbnailImg.layer.cornerRadius = 5
                 self.thumbnailImg.clipsToBounds = true
-                self.thumbnailImg.setImageWithURL(NSURL(string: thumbnailUrl))
+//                self.thumbnailImg.setImageWithURL(NSURL(string: thumbnailUrl))
+                var urlReq = NSURLRequest(URL: NSURL(string: thumbnailUrl)!)
+                self.thumbnailImg.setImageWithURLRequest(urlReq, placeholderImage: nil,
+                    success: { (request: NSURLRequest!, response: NSHTTPURLResponse!, image:UIImage!) -> Void in
+                        self.thumbnailImg.alpha = 0.0
+                        self.thumbnailImg.image = image
+                        UIView.animateWithDuration(0.25, animations: {self.thumbnailImg.alpha = 1.0 })
+                    }, failure: { (request:NSURLRequest!, response:NSHTTPURLResponse!, error:NSError!) -> Void in
+                        println(error)
+                })
+
             }
             if let ratingsUrl = self.business?.ratingImageUrl {
                 self.ratingsImg.setImageWithURL(NSURL(string: ratingsUrl))
