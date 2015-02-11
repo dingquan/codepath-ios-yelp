@@ -15,6 +15,7 @@
 		222D8A6519CCF9F900D2DB53 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 222D8A6319CCF9F900D2DB53 /* LaunchScreen.xib */; };
 		222D8A7119CCF9F900D2DB53 /* YelpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D8A7019CCF9F900D2DB53 /* YelpTests.swift */; };
 		222D8A7D19CCFAE000D2DB53 /* YelpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D8A7C19CCFAE000D2DB53 /* YelpClient.swift */; };
+		463068DE1A8BEE3600C8C184 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463068DD1A8BEE3600C8C184 /* QuartzCore.framework */; };
 		4659D3711A89E1BB008D5228 /* Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4659D3701A89E1BB008D5228 /* Business.swift */; };
 		4659D3741A8AC4A5008D5228 /* BusinessTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4659D3731A8AC4A5008D5228 /* BusinessTableViewCell.swift */; };
 		4659D3761A8AD215008D5228 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4659D3751A8AD215008D5228 /* SwiftyJSON.swift */; };
@@ -44,6 +45,7 @@
 		222D8A7019CCF9F900D2DB53 /* YelpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpTests.swift; sourceTree = "<group>"; };
 		222D8A7C19CCFAE000D2DB53 /* YelpClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YelpClient.swift; sourceTree = "<group>"; };
 		222D8A7E19CCFAEF00D2DB53 /* Yelp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Yelp-Bridging-Header.h"; sourceTree = "<group>"; };
+		463068DD1A8BEE3600C8C184 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4659D3701A89E1BB008D5228 /* Business.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Business.swift; sourceTree = "<group>"; };
 		4659D3731A8AC4A5008D5228 /* BusinessTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessTableViewCell.swift; sourceTree = "<group>"; };
 		4659D3751A8AD215008D5228 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				463068DE1A8BEE3600C8C184 /* QuartzCore.framework in Frameworks */,
 				03D1A025B413415787AD3DF3 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -176,6 +179,7 @@
 		4A7CA25ACD374CA0AC966A24 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				463068DD1A8BEE3600C8C184 /* QuartzCore.framework */,
 				4659D3751A8AD215008D5228 /* SwiftyJSON.swift */,
 				C56EF0CE844A4EE5819C72AF /* libPods.a */,
 			);

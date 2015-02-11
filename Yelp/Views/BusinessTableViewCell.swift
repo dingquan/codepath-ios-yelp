@@ -31,6 +31,8 @@ class BusinessTableViewCell: UITableViewCell {
                 self.distanceLabel.text = String(format: "%.2f mi", distance)
             }
             if let thumbnailUrl = self.business?.imageUrl {
+                self.thumbnailImg.layer.cornerRadius = 5
+                self.thumbnailImg.clipsToBounds = true
                 self.thumbnailImg.setImageWithURL(NSURL(string: thumbnailUrl))
             }
             if let ratingsUrl = self.business?.ratingImageUrl {
