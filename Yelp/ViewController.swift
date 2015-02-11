@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     var client: YelpClient!
     var businesses: [Business]!
     
@@ -30,20 +30,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
 //        self.businessTable.delegate = self
 //        self.businessTable.dataSource = self
+        
+        var searchBar:UISearchBar = UISearchBar()
+        searchBar.delegate = self
+        self.navigationItem.titleView = searchBar
+        
         self.businessTable.rowHeight = UITableViewAutomaticDimension
         
         client = YelpClient(consumerKey: yelpConsumerKey, consumerSecret: yelpConsumerSecret, accessToken: yelpToken, accessSecret: yelpTokenSecret)
         
         client = YelpClient(consumerKey: yelpConsumerKey, consumerSecret: yelpConsumerSecret, accessToken: yelpToken, accessSecret: yelpTokenSecret)
         
-        client.searchWithTerm("Thai", success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
-                println(response["businesses"])
-                self.businesses = Business.businessesWithDictionaries(response["businesses"] as NSArray)
-                println(self.businesses.count)
-                self.businessTable.reloadData()
-            }, failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
-                println(error)
-        })
+        searchBusinesses("Chinese Restaurant")
     }
     
     override func didReceiveMemoryWarning() {
@@ -68,6 +66,27 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let cell = tableView.dequeueReusableCellWithIdentifier("BusinessCell", forIndexPath: indexPath) as BusinessTableViewCell
         cell.business = self.businesses[indexPath.row]
         return cell
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar){
+        var searchText:String = searchBar.text
+        if searchText.isEmpty{
+            return
+        }
+        NSLog("searching for " + searchBar.text)
+        searchBar.resignFirstResponder()
+        searchBusinesses(searchBar.text)
+    }
+    
+    func searchBusinesses(searchTerm:String){
+        client.searchWithTerm(searchTerm, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+            println(response["businesses"])
+            self.businesses = Business.businessesWithDictionaries(response["businesses"] as NSArray)
+            println(self.businesses.count)
+            self.businessTable.reloadData()
+            }, failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                println(error)
+        })
     }
 }
 

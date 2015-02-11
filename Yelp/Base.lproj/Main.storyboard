@@ -110,12 +110,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="M12-0Z-nG5" secondAttribute="trailing" id="2zQ-Wa-Dso"/>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="M12-0Z-nG5" secondAttribute="bottom" id="gfF-lf-qnY"/>
-                            <constraint firstItem="M12-0Z-nG5" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="lJH-Nx-UO5"/>
+                            <constraint firstItem="M12-0Z-nG5" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="hO9-cp-Vse"/>
                             <constraint firstItem="M12-0Z-nG5" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="qY5-0U-9cl"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="M12-0Z-nG5" secondAttribute="bottom" id="tr7-6X-tzG"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Co6-ul-z4S"/>
+                    <navigationItem key="navigationItem" id="r0A-u8-nYC">
+                        <barButtonItem key="leftBarButtonItem" title="Filter" id="o13-td-M1F"/>
+                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="businessTable" destination="M12-0Z-nG5" id="5xb-qK-PKV"/>
