@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vU2-f6-Cl7">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6750" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vU2-f6-Cl7">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6735"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -32,10 +32,10 @@
                                                         <constraint firstAttribute="width" constant="70" id="Np5-zV-B93"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="1 Grand Pu Bah" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jin-5H-A5Y">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="1 Grand Pu Bah" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jin-5H-A5Y">
                                                     <rect key="frame" x="86" y="8" width="183" height="15"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zg8-4B-FpW">
@@ -48,7 +48,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="88 Division St, Mission Bay" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bXP-Nv-k4f">
                                                     <rect key="frame" x="86" y="50" width="128" height="12"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thai, Seafood, Salad" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ae3-TX-I3c">
@@ -78,7 +78,6 @@
                                                 <constraint firstItem="ngo-bP-tf0" firstAttribute="leading" secondItem="J1V-YW-YAV" secondAttribute="leading" constant="8" id="9yr-GG-WcK"/>
                                                 <constraint firstItem="bXP-Nv-k4f" firstAttribute="top" secondItem="zg8-4B-FpW" secondAttribute="bottom" constant="6" id="A5A-9K-Jg6"/>
                                                 <constraint firstItem="bXP-Nv-k4f" firstAttribute="leading" secondItem="ngo-bP-tf0" secondAttribute="trailing" constant="8" id="Cv3-fl-KMR"/>
-                                                <constraint firstItem="BSk-dZ-P3x" firstAttribute="centerY" secondItem="jin-5H-A5Y" secondAttribute="centerY" id="IY8-Sp-2oC"/>
                                                 <constraint firstItem="jin-5H-A5Y" firstAttribute="leading" secondItem="ngo-bP-tf0" secondAttribute="trailing" constant="8" id="RVn-4P-6bZ"/>
                                                 <constraint firstItem="zg8-4B-FpW" firstAttribute="top" secondItem="jin-5H-A5Y" secondAttribute="bottom" constant="4" id="T0P-ly-rEu"/>
                                                 <constraint firstItem="ae3-TX-I3c" firstAttribute="top" secondItem="bXP-Nv-k4f" secondAttribute="bottom" constant="2" id="W8D-11-Duq"/>
@@ -88,6 +87,7 @@
                                                 <constraint firstItem="ngo-bP-tf0" firstAttribute="top" secondItem="J1V-YW-YAV" secondAttribute="top" constant="8" id="hFz-em-sTH"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ae3-TX-I3c" secondAttribute="bottom" constant="8" id="vLi-VT-Mi2"/>
                                                 <constraint firstItem="zg8-4B-FpW" firstAttribute="centerY" secondItem="CFM-ZG-t8b" secondAttribute="centerY" id="vi9-gu-Bh8"/>
+                                                <constraint firstItem="BSk-dZ-P3x" firstAttribute="top" secondItem="J1V-YW-YAV" secondAttribute="top" constant="10" id="ydv-WY-RHN"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
