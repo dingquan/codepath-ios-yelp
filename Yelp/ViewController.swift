@@ -35,6 +35,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         searchBar.delegate = self
         self.navigationItem.titleView = searchBar
         
+        self.businessTable.estimatedRowHeight = 102
+        
         self.businessTable.rowHeight = UITableViewAutomaticDimension
         
         client = YelpClient(consumerKey: yelpConsumerKey, consumerSecret: yelpConsumerSecret, accessToken: yelpToken, accessSecret: yelpTokenSecret)
