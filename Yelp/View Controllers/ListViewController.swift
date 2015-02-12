@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
+class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, FiltersViewControllerDelegate {
     var client: YelpClient!
     var businesses: [Business]!
     
@@ -89,7 +89,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if searchText.isEmpty{
             return
         }
-        NSLog("searching for " + searchBar.text)
+        println("searching for " + searchBar.text)
         searchBar.resignFirstResponder()
         searchBusinesses(searchBar.text)
     }
@@ -98,11 +98,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         client.searchWithTerm(searchTerm, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
             println(response["businesses"])
             self.businesses = Business.businessesWithDictionaries(response["businesses"] as NSArray)
-            println(self.businesses.count)
             self.businessTable.reloadData()
             }, failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                 println(error)
         })
+    }
+    
+    func didChangeFilters(filtersViewcontroller:FiltersViewController, filters:NSDictionary){
+        println("Filter has changed")
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showFilters" {
+            if let filtersViewController = segue.destinationViewController as? FiltersViewController{
+                filtersViewController.delegate = self
+            }
+        }
     }
 }
 
