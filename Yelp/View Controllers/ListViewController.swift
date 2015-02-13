@@ -11,6 +11,8 @@ import UIKit
 class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, FiltersViewControllerDelegate {
     var client: YelpClient!
     var businesses: [Business]!
+    var searchTerm: String!
+    var filters:NSDictionary?
     
     @IBOutlet weak var businessTable: UITableView!
 
@@ -22,6 +24,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        self.searchTerm = "Chinese Restaurant"
     }
     
     override func viewDidLoad() {
@@ -43,7 +46,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         client = YelpClient(consumerKey: yelpConsumerKey, consumerSecret: yelpConsumerSecret, accessToken: yelpToken, accessSecret: yelpTokenSecret)
         
-        searchBusinesses("Chinese Restaurant")
+        searchBusinesses(self.searchTerm, params: self.filters)
     }
     
     override func didReceiveMemoryWarning() {
@@ -89,14 +92,15 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if searchText.isEmpty{
             return
         }
-        println("searching for " + searchBar.text)
+        println("searching for " + searchText)
         searchBar.resignFirstResponder()
-        searchBusinesses(searchBar.text)
+        self.searchTerm = searchText
+        searchBusinesses(searchText, params: self.filters)
     }
     
-    func searchBusinesses(searchTerm:String){
-        client.searchWithTerm(searchTerm, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
-            println(response["businesses"])
+    func searchBusinesses(searchTerm:String, params:NSDictionary?){
+        client.searchWithTerm(searchTerm, params: params, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+//            println(response["businesses"])
             self.businesses = Business.businessesWithDictionaries(response["businesses"] as NSArray)
             self.businessTable.reloadData()
             }, failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
@@ -104,8 +108,10 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         })
     }
     
-    func didChangeFilters(filtersViewcontroller:FiltersViewController, filters:Dictionary<String, AnyObject>){
-        println("Filter has changed")
+    func didChangeFilters(filtersViewcontroller:FiltersViewController, filters:NSDictionary){
+        println("Filter has changed: \(filters)")
+        self.filters = filters
+        searchBusinesses(self.searchTerm, params: filters)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

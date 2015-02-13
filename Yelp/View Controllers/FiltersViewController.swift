@@ -34,11 +34,11 @@ private let categoryOptions = [["name" : "Afghan", "code": "afghani"],
     ["name" : "Asian Fusion", "code": "asianfusion"],
     ["name" : "Asturian", "code": "asturian"],
     ["name" : "Australian", "code": "australian"],
-    ["name" : "Austrian", "code": "austrian"],
-    ["name" : "Baguettes", "code": "baguettes"],
-    ["name" : "Bangladeshi", "code": "bangladeshi"],
-    ["name" : "Barbeque", "code": "bbq"],
-    ["name" : "Basque", "code": "basque"]]
+    ["name" : "Austrian", "code": "austrian"]]
+//    ["name" : "Baguettes", "code": "baguettes"],
+//    ["name" : "Bangladeshi", "code": "bangladeshi"],
+//    ["name" : "Barbeque", "code": "bbq"],
+//    ["name" : "Basque", "code": "basque"],
 //    ["name" : "Bavarian", "code": "bavarian"],
 //    ["name" : "Beer Garden", "code": "beergarden"],
 //    ["name" : "Beer Hall", "code": "beerhall"],
@@ -197,13 +197,13 @@ private let categoryOptions = [["name" : "Afghan", "code": "afghani"],
 private let switchOptions = [sortingOptions, radiusOptions, dealOptions, categoryOptions]
 
 protocol FiltersViewControllerDelegate : class {
-    func didChangeFilters(filtersViewcontroller:FiltersViewController, filters:Dictionary<String, AnyObject>)
+    func didChangeFilters(filtersViewcontroller:FiltersViewController, filters:NSDictionary)
 }
 
 class FiltersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FiltersTableViewCellDelegate {
     
     weak var delegate:FiltersViewControllerDelegate?
-    var filters:Dictionary<String, AnyObject>!
+    var filters:NSDictionary!
     
     var switchSelections:[NSMutableSet]!
     
@@ -220,6 +220,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
         println("onSearch")
         
         self.dismissViewControllerAnimated(true, completion: nil)
+        self.filters = getFilterSelections()
         delegate?.didChangeFilters(self, filters: self.filters)
     }
     
@@ -255,7 +256,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
         let cell = tableView.dequeueReusableCellWithIdentifier("FilterCell", forIndexPath: indexPath) as FiltersTableViewCell
         
         cell.delegate = self
-        cell.settingsSwitch.on = self.switchSelections[indexPath.section].containsObject(switchOptions[indexPath.section][indexPath.row]["name"]!)
+        cell.settingsSwitch.on = self.switchSelections[indexPath.section].containsObject(switchOptions[indexPath.section][indexPath.row])
         
         cell.settingsLabel.text = switchOptions[indexPath.section][indexPath.row]["name"]
         
@@ -278,7 +279,8 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     func filtersView(filtersCell: FiltersTableViewCell, didChangeSwitchValue value:Bool){
         println("FiltersView delegate got the new value: \(value)")
         let indexPath:NSIndexPath = self.filtersTable.indexPathForCell(filtersCell)!
-        let selection:String = switchOptions[indexPath.section][indexPath.row]["name"]!
+        let selection = switchOptions[indexPath.section][indexPath.row]
+        
         println(( value ? "Add" : "Remove" ) + " selection: \(selection)")
         if (value){
             if (indexPath.section != 3){ // not a food category selection
@@ -291,6 +293,36 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
             self.switchSelections[indexPath.section].removeObject(selection)
         }
         self.filtersTable.reloadData()
+    }
+    
+    func getFilterSelections() -> NSDictionary {
+        var filters = NSMutableDictionary()
+
+        // process the sorting option
+        if self.switchSelections[0].count > 0 {
+            for selection in self.switchSelections[0] {
+                filters["sort"] = selection["code"] as NSString
+            }
+        }
+        // process radius option
+        if self.switchSelections[1].count > 0 {
+            for selection in self.switchSelections[1] {
+                filters["radius_filter"] = selection["code"] as NSString
+            }
+        }
+        // process deals option
+        if self.switchSelections[2].count > 0 {
+            filters["deals_filter"] = "true"
+        }
+        // process the category options
+        if self.switchSelections[3].count > 0 {
+            var selectedCategories:[String] = []
+            for selection in self.switchSelections[3] {
+                selectedCategories.append(selection["code"] as NSString)
+            }
+            filters["category_filter"] = ",".join(selectedCategories)
+        }
+        return filters;
     }
     
     /*

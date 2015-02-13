@@ -26,10 +26,14 @@ class YelpClient: BDBOAuth1RequestOperationManager {
         self.requestSerializer.saveAccessToken(token)
     }
     
-    func searchWithTerm(term: String, success: (AFHTTPRequestOperation!, AnyObject!) -> Void, failure: (AFHTTPRequestOperation!, NSError!) -> Void) -> AFHTTPRequestOperation! {
+    func searchWithTerm(term: String, params:NSDictionary?, success: (AFHTTPRequestOperation!, AnyObject!) -> Void, failure: (AFHTTPRequestOperation!, NSError!) -> Void) -> AFHTTPRequestOperation! {
         // For additional parameters, see http://www.yelp.com/developers/documentation/v2/search_api
-        var parameters = ["term": term, "ll" : "37.791412, -122.395606"]
-        return self.GET("search", parameters: parameters, success: success, failure: failure)
+        var defaultParams:NSDictionary = ["term": term, "ll" : "37.791412, -122.395606"]
+        var allParams:NSMutableDictionary = defaultParams.mutableCopy() as NSMutableDictionary
+        if params != nil {
+            allParams.addEntriesFromDictionary(params!)
+        }
+        return self.GET("search", parameters: allParams, success: success, failure: failure)
     }
     
 }
