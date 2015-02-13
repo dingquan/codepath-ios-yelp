@@ -262,7 +262,12 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FilterCell", forIndexPath: indexPath) as FiltersTableViewCell
-        
+
+//        cell.layer.cornerRadius = 5
+//        cell.layer.masksToBounds = true
+//        cell.layer.borderWidth = 1
+//        cell.clipsToBounds = true
+
         cell.delegate = self
         cell.settingsSwitch.on = self.switchSelections[indexPath.section].containsObject(switchOptions[indexPath.section][indexPath.row])
         
