@@ -24,17 +24,25 @@ private let radiusOptions = [["name": "0.3 mile", "code": "483"],
 
 private let dealOptions = [["name": "Has Deals", "code": "true"]]
 
-private let categoryOptions = [["name" : "Afghan", "code": "afghani"],
-    ["name" : "African", "code": "african"],
-    ["name" : "American, New", "code": "newamerican"],
-    ["name" : "American, Traditional", "code": "tradamerican"],
-    ["name" : "Arabian", "code": "arabian"],
-    ["name" : "Argentine", "code": "argentine"],
-    ["name" : "Armenian", "code": "armenian"],
-    ["name" : "Asian Fusion", "code": "asianfusion"],
-    ["name" : "Asturian", "code": "asturian"],
-    ["name" : "Australian", "code": "australian"],
-    ["name" : "Austrian", "code": "austrian"]]
+private let categoryOptions = [
+                  ["name" : "Burgers", "code": "burgers"],
+                  ["name" : "Chinese", "code": "chinese"],
+                  ["name" : "Greek", "code": "greek"],
+                  ["name" : "Mexican", "code": "mexican"],
+                  ["name" : "Thai", "code": "thai"],
+                  ["name" : "Vegetarian", "code": "vegetarian"]]
+
+//[["name" : "Afghan", "code": "afghani"],
+//    ["name" : "African", "code": "african"],
+//    ["name" : "American, New", "code": "newamerican"],
+//    ["name" : "American, Traditional", "code": "tradamerican"],
+//    ["name" : "Arabian", "code": "arabian"],
+//    ["name" : "Argentine", "code": "argentine"],
+//    ["name" : "Armenian", "code": "armenian"],
+//    ["name" : "Asian Fusion", "code": "asianfusion"],
+//    ["name" : "Asturian", "code": "asturian"],
+//    ["name" : "Australian", "code": "australian"],
+//    ["name" : "Austrian", "code": "austrian"],
 //    ["name" : "Baguettes", "code": "baguettes"],
 //    ["name" : "Bangladeshi", "code": "bangladeshi"],
 //    ["name" : "Barbeque", "code": "bbq"],
@@ -211,7 +219,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        filters = Dictionary<String, AnyObject>()
+        filters = NSDictionary()
         
         switchSelections = [NSMutableSet(), NSMutableSet(), NSMutableSet(), NSMutableSet()]
     }
