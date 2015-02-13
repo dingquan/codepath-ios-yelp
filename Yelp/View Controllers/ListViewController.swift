@@ -104,7 +104,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         })
     }
     
-    func didChangeFilters(filtersViewcontroller:FiltersViewController, filters:NSDictionary){
+    func didChangeFilters(filtersViewcontroller:FiltersViewController, filters:Dictionary<String, AnyObject>){
         println("Filter has changed")
     }
     
