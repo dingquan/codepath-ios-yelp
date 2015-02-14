@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vU2-f6-Cl7">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6750" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vU2-f6-Cl7">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6735"/>
     </dependencies>
     <scenes>
         <!--List View Controller-->
@@ -16,8 +16,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tUM-b6-iuQ">
-                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tUM-b6-iuQ">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <subviews>
                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="D25-FW-CTs">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
@@ -178,7 +178,7 @@
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FilterCell" id="rWi-MJ-JQN" customClass="FiltersTableViewCell" customModule="Yelp" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SwitchCell" id="rWi-MJ-JQN" customClass="FiltersTableViewCell" customModule="Yelp" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rWi-MJ-JQN" id="Zr5-hT-RyV">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -191,6 +191,7 @@
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oLp-xz-qrJ">
                                                     <rect key="frame" x="263" y="7" width="51" height="31"/>
+                                                    <color key="onTintColor" red="0.84825460490000004" green="0.007742468051" blue="0.050395355320000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <connections>
                                                         <action selector="switchValueChanged:" destination="rWi-MJ-JQN" eventType="valueChanged" id="N6Z-5T-Zbf"/>
                                                     </connections>
@@ -206,7 +207,44 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="settingsLabel" destination="Jqg-Og-f0b" id="qZ4-dg-DQK"/>
-                                            <outlet property="settingsSwitch" destination="oLp-xz-qrJ" id="gE1-0D-gJo"/>
+                                            <outlet property="settingsSwitch" destination="oLp-xz-qrJ" id="rhL-K6-pkX"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CheckerCell" id="YOA-Af-1dU" customClass="CheckerTableViewCell" customModule="Yelp" customModuleProvider="target">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YOA-Af-1dU" id="3Z6-AK-Ukt">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D3v-9B-RTh">
+                                                    <rect key="frame" x="8" y="12" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dPV-6c-EDd">
+                                                    <rect key="frame" x="278" y="8" width="30" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="30" id="BUM-RL-aB3"/>
+                                                        <constraint firstAttribute="height" constant="30" id="Ijd-3E-e8S"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Button" image="checker">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="switchValueChanged:" destination="YOA-Af-1dU" eventType="touchUpInside" id="SWi-oR-4bE"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="D3v-9B-RTh" firstAttribute="top" secondItem="3Z6-AK-Ukt" secondAttribute="top" constant="12" id="QUa-7A-ANb"/>
+                                                <constraint firstItem="D3v-9B-RTh" firstAttribute="centerY" secondItem="dPV-6c-EDd" secondAttribute="centerY" id="SQp-Gv-AR6"/>
+                                                <constraint firstAttribute="trailing" secondItem="dPV-6c-EDd" secondAttribute="trailing" constant="12" id="Ztn-Ht-FVf"/>
+                                                <constraint firstItem="D3v-9B-RTh" firstAttribute="leading" secondItem="3Z6-AK-Ukt" secondAttribute="leading" constant="8" id="f6z-oX-sVA"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="settingsLabel" destination="D3v-9B-RTh" id="wHm-iT-UJB"/>
+                                            <outlet property="settingsSwitch" destination="dPV-6c-EDd" id="Un4-Eb-p8t"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -278,6 +316,9 @@
             <point key="canvasLocation" x="190" y="148"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="checker" width="30" height="30"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

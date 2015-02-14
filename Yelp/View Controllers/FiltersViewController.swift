@@ -261,17 +261,29 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("FilterCell", forIndexPath: indexPath) as FiltersTableViewCell
+        var cell:UITableViewCell
+        if indexPath.section == 3 {
+            cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as FiltersTableViewCell
+            (cell as FiltersTableViewCell).delegate = self
+            ((cell as FiltersTableViewCell).settingsSwitch as UISwitch).on = self.switchSelections[indexPath.section].containsObject(switchOptions[indexPath.section][indexPath.row])
+            (cell as FiltersTableViewCell).settingsLabel.text = switchOptions[indexPath.section][indexPath.row]["name"]
+
+        }
+        else {
+            cell = tableView.dequeueReusableCellWithIdentifier("CheckerCell", forIndexPath: indexPath) as CheckerTableViewCell
+            (cell as CheckerTableViewCell).delegate = self
+            ((cell as CheckerTableViewCell).settingsSwitch as UIButton).setImage(UIImage(named: "checker"), forState: UIControlState.Normal)
+            if (!self.switchSelections[indexPath.section].containsObject(switchOptions[indexPath.section][indexPath.row])){
+                ((cell as CheckerTableViewCell).settingsSwitch as UIButton).setImage(nil, forState: UIControlState.Normal)
+            }
+            (cell as CheckerTableViewCell).settingsLabel.text = switchOptions[indexPath.section][indexPath.row]["name"]
+        }
 
 //        cell.layer.cornerRadius = 5
 //        cell.layer.masksToBounds = true
 //        cell.layer.borderWidth = 1
 //        cell.clipsToBounds = true
 
-        cell.delegate = self
-        cell.settingsSwitch.on = self.switchSelections[indexPath.section].containsObject(switchOptions[indexPath.section][indexPath.row])
-        
-        cell.settingsLabel.text = switchOptions[indexPath.section][indexPath.row]["name"]
         
         // change the default margin of the table divider length
         if (cell.respondsToSelector(Selector("setPreservesSuperviewLayoutMargins:"))){
@@ -289,7 +301,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
         return cell
     }
     
-    func filtersView(filtersCell: FiltersTableViewCell, didChangeSwitchValue value:Bool){
+    func filtersView(filtersCell: UITableViewCell, didChangeSwitchValue value:Bool){
         println("FiltersView delegate got the new value: \(value)")
         let indexPath:NSIndexPath = self.filtersTable.indexPathForCell(filtersCell)!
         let selection = switchOptions[indexPath.section][indexPath.row]

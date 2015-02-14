@@ -9,16 +9,24 @@
 import UIKit
 
 protocol FiltersTableViewCellDelegate : class {
-    func filtersView(filtersCell: FiltersTableViewCell, didChangeSwitchValue value:Bool)
+    func filtersView(filtersCell: UITableViewCell, didChangeSwitchValue value:Bool)
 }
 
-class FiltersTableViewCell: UITableViewCell {
+protocol YelpTableViewCell {
+    var settingsLabel: UILabel! {get}
+    var settingsSwitch: UIControl! {get}
+    var delegate: FiltersTableViewCellDelegate? {get set}
+    
+}
+
+class FiltersTableViewCell: UITableViewCell, YelpTableViewCell{
     weak var delegate: FiltersTableViewCellDelegate?
     
     @IBOutlet weak var settingsLabel: UILabel!
-    @IBOutlet weak var settingsSwitch: UISwitch!
+    @IBOutlet weak var settingsSwitch: UIControl!
     
     @IBAction func switchValueChanged(sender: AnyObject) {
+        let settingsSwitch = self.settingsSwitch as UISwitch
         println("switch for label \"\(settingsLabel.text!)\" has changed to \(settingsSwitch.on)")
         delegate?.filtersView(self, didChangeSwitchValue: settingsSwitch.on)
     }
