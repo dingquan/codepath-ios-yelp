@@ -143,6 +143,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 var annotation = MKPointAnnotation()
                 annotation.coordinate = businessLocation
                 annotation.title = business.name
+                annotation.subtitle = "\(business.numReviews!) reviews"
                 annotations.append(annotation)
             }
         }
@@ -203,6 +204,29 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 filtersViewController.delegate = self
             }
         }
+    }
+    
+    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+        if (annotation is MKUserLocation) {
+            //if annotation is not an MKPointAnnotation (eg. MKUserLocation),
+            //return nil so map draws default view for it (eg. blue dot)...
+            return nil
+        }
+        
+        let reuseId = "pin"
+        
+        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId)
+        if pinView == nil {
+            pinView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            pinView.image = UIImage(named:"pin")
+            pinView.canShowCallout = true
+        }
+        else {
+            //we are re-using a view, update its annotation reference...
+            pinView.annotation = annotation
+        }
+        
+        return pinView
     }
 }
 
