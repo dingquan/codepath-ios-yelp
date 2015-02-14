@@ -209,6 +209,9 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func didChangeFilters(filtersViewcontroller:FiltersViewController, filters:NSDictionary){
         println("Filter has changed: \(filters)")
         self.filters = filters
+        // clean previous table results and offset
+        self.offset = 0;
+        self.businesses.removeAll(keepCapacity: false)
         searchBusinesses(self.searchTerm, offset: self.offset, params: filters)
     }
     
