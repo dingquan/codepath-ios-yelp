@@ -272,9 +272,10 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
         else {
             cell = tableView.dequeueReusableCellWithIdentifier("CheckerCell", forIndexPath: indexPath) as CheckerTableViewCell
             (cell as CheckerTableViewCell).delegate = self
-            ((cell as CheckerTableViewCell).settingsSwitch as UIButton).setImage(UIImage(named: "checker"), forState: UIControlState.Normal)
+            ((cell as CheckerTableViewCell).settingsSwitch as UIButton).setImage(UIImage(named: "tick"), forState: UIControlState.Normal)
+            ((cell as CheckerTableViewCell).settingsSwitch as UIButton).setImage(UIImage(named: "white"), forState: UIControlState.Highlighted | UIControlState.Selected | UIControlState.Application)
             if (!self.switchSelections[indexPath.section].containsObject(switchOptions[indexPath.section][indexPath.row])){
-                ((cell as CheckerTableViewCell).settingsSwitch as UIButton).setImage(nil, forState: UIControlState.Normal)
+                ((cell as CheckerTableViewCell).settingsSwitch as UIButton).setImage(UIImage(named: "white"), forState: UIControlState.Normal)
             }
             (cell as CheckerTableViewCell).settingsLabel.text = switchOptions[indexPath.section][indexPath.row]["name"]
         }

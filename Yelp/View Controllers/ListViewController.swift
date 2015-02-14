@@ -29,7 +29,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.searchTerm = "Chinese Restaurant"
+        self.searchTerm = "food"
     }
     
     @IBAction func toggleMap(sender: AnyObject) {

@@ -35,7 +35,7 @@ class BusinessTableViewCell: UITableViewCell {
                 self.thumbnailImg.clipsToBounds = true
 //                self.thumbnailImg.setImageWithURL(NSURL(string: thumbnailUrl))
                 var urlReq = NSURLRequest(URL: NSURL(string: thumbnailUrl)!)
-                self.thumbnailImg.setImageWithURLRequest(urlReq, placeholderImage: nil,
+                self.thumbnailImg.setImageWithURLRequest(urlReq, placeholderImage: UIImage(named: "white"),
                     success: { (request: NSURLRequest!, response: NSHTTPURLResponse!, image:UIImage!) -> Void in
                         self.thumbnailImg.alpha = 0.0
                         self.thumbnailImg.image = image
