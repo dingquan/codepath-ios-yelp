@@ -14,6 +14,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var businesses: [Business]!
     var searchTerm: String!
     var filters:NSDictionary?
+    var offset:Int!
     
     @IBOutlet var businessMap: MKMapView!
     @IBOutlet weak var listMapToggle: UIBarButtonItem!
@@ -30,6 +31,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.searchTerm = "food"
+        self.offset = 0
     }
     
     @IBAction func toggleMap(sender: AnyObject) {
@@ -94,15 +96,22 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //        self.businessMap.hidden = true
         initializeMap()
         
+        self.businesses = [Business]()
         self.businessTable.estimatedRowHeight = 102
         
         self.businessTable.rowHeight = UITableViewAutomaticDimension
         
-        client = YelpClient(consumerKey: yelpConsumerKey, consumerSecret: yelpConsumerSecret, accessToken: yelpToken, accessSecret: yelpTokenSecret)
+        self.businessTable.addInfiniteScrollingWithActionHandler({
+            println("infinite scroll triggered")
+            self.searchBusinesses(self.searchTerm, offset: self.offset, params: self.filters)
+            ();
+        })
         
         client = YelpClient(consumerKey: yelpConsumerKey, consumerSecret: yelpConsumerSecret, accessToken: yelpToken, accessSecret: yelpTokenSecret)
         
-        searchBusinesses(self.searchTerm, params: self.filters)
+        client = YelpClient(consumerKey: yelpConsumerKey, consumerSecret: yelpConsumerSecret, accessToken: yelpToken, accessSecret: yelpTokenSecret)
+        
+        searchBusinesses(self.searchTerm, offset: self.offset, params: self.filters)
     }
     
     override func didReceiveMemoryWarning() {
@@ -178,15 +187,20 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         println("searching for " + searchText)
         searchBar.resignFirstResponder()
         self.searchTerm = searchText
-        searchBusinesses(searchText, params: self.filters)
+        searchBusinesses(searchText, offset: self.offset, params: self.filters)
     }
     
-    func searchBusinesses(searchTerm:String, params:NSDictionary?){
-        client.searchWithTerm(searchTerm, params: params, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
-            println(response["businesses"])
-            self.businesses = Business.businessesWithDictionaries(response["businesses"] as NSArray)
+    func searchBusinesses(searchTerm:String, offset:Int, params:NSDictionary?){
+        println("search business for term: \(searchTerm) at offset: \(offset) for filters: \(params)")
+        client.searchWithTerm(searchTerm, offset: offset, params: params, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+//            println(response["businesses"])
+            var newBusinessRecords = Business.businessesWithDictionaries(response["businesses"] as NSArray)
+            println("fetched \(newBusinessRecords.count) records")
+            self.businesses = self.businesses + newBusinessRecords
             self.businessTable.reloadData()
+            self.offset = self.businesses.count
             self.loadBusinessesOnMap()
+            self.businessTable.infiniteScrollingView.stopAnimating()
             }, failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                 println(error)
         })
@@ -195,7 +209,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func didChangeFilters(filtersViewcontroller:FiltersViewController, filters:NSDictionary){
         println("Filter has changed: \(filters)")
         self.filters = filters
-        searchBusinesses(self.searchTerm, params: filters)
+        searchBusinesses(self.searchTerm, offset: self.offset, params: filters)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

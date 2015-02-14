@@ -36,10 +36,10 @@ class Business {
         }
         business.categories = ", ".join(categoryArr)
         var location = dictionary["location"] as NSDictionary
-        var street = (location["address"] as NSArray)[0] as NSString
-        var neighborhood = (location["neighborhoods"] as NSArray)[0] as NSString
-        business.address = "\(street), \(neighborhood)"
-        
+//        var street = (location["address"] as NSArray)[0] as NSString
+//        var neighborhood = (location["neighborhoods"] as NSArray)[0] as NSString
+//        business.address = "\(street), \(neighborhood)"
+        business.address = (location["display_address"] as NSArray)[0] as NSString
         var coordinates = location["coordinate"] as NSDictionary
         business.latitude = (coordinates["latitude"] as NSNumber).floatValue
         business.longitude = (coordinates["longitude"] as NSNumber).floatValue
