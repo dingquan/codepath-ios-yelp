@@ -13,10 +13,10 @@
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tUM-b6-iuQ">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tUM-b6-iuQ">
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <subviews>
                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="D25-FW-CTs">
@@ -129,7 +129,6 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="tUM-b6-iuQ" secondAttribute="trailing" id="QPv-I4-DoT"/>
                             <constraint firstItem="tUM-b6-iuQ" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="QtY-wq-bJO"/>
@@ -139,11 +138,13 @@
                     </view>
                     <navigationItem key="navigationItem" id="r0A-u8-nYC">
                         <barButtonItem key="leftBarButtonItem" title="Filter" id="o13-td-M1F">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <segue destination="uhy-W7-Bjb" kind="modal" identifier="showFilters" id="pvy-9z-hlm"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Map" id="2ZG-de-dic">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="toggleMap:" destination="vXZ-lx-hvc" id="6Bs-9G-hcG"/>
                             </connections>
@@ -259,9 +260,13 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="vU2-f6-Cl7" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="F18-ve-ziY">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="F18-ve-ziY">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.84825460487225202" green="0.0077424680507828456" blue="0.050395355322073912" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
