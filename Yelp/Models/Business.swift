@@ -16,6 +16,8 @@ class Business {
     var address:String?
     var categories:String?
     var distance:Float?
+    var latitude:Float?
+    var longitude:Float?
     
     init(){
         
@@ -37,6 +39,10 @@ class Business {
         var street = (location["address"] as NSArray)[0] as NSString
         var neighborhood = (location["neighborhoods"] as NSArray)[0] as NSString
         business.address = "\(street), \(neighborhood)"
+        
+        var coordinates = location["coordinate"] as NSDictionary
+        business.latitude = (coordinates["latitude"] as NSNumber).floatValue
+        business.longitude = (coordinates["longitude"] as NSNumber).floatValue
         business.distance = (dictionary["distance"] as NSNumber).floatValue * 0.000621371
         return business
     }
