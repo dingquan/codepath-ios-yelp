@@ -54,14 +54,14 @@
                                                                 <constraint firstAttribute="height" constant="17" id="ysS-nT-TA8"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="88 Division St, Mission Bay" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bXP-Nv-k4f">
-                                                            <rect key="frame" x="86" y="50" width="128" height="12"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="88 Division St, Mission Bay" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bXP-Nv-k4f">
+                                                            <rect key="frame" x="86" y="50" width="218" height="12"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thai, Seafood, Salad" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ae3-TX-I3c">
-                                                            <rect key="frame" x="86" y="64" width="98" height="12"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Thai, Seafood, Salad" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ae3-TX-I3c">
+                                                            <rect key="frame" x="86" y="64" width="218" height="12"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
@@ -84,9 +84,11 @@
                                                         <constraint firstAttribute="trailing" secondItem="BSk-dZ-P3x" secondAttribute="trailing" constant="8" id="22Y-gj-IjS"/>
                                                         <constraint firstItem="zg8-4B-FpW" firstAttribute="leading" secondItem="ngo-bP-tf0" secondAttribute="trailing" constant="8" id="4IN-bL-adB"/>
                                                         <constraint firstItem="CFM-ZG-t8b" firstAttribute="leading" secondItem="zg8-4B-FpW" secondAttribute="trailing" constant="5" id="6bo-0m-2pm"/>
+                                                        <constraint firstAttribute="trailing" secondItem="ae3-TX-I3c" secondAttribute="trailing" constant="16" id="8sh-sF-ddG"/>
                                                         <constraint firstItem="ngo-bP-tf0" firstAttribute="leading" secondItem="J1V-YW-YAV" secondAttribute="leading" constant="8" id="9yr-GG-WcK"/>
                                                         <constraint firstItem="bXP-Nv-k4f" firstAttribute="top" secondItem="zg8-4B-FpW" secondAttribute="bottom" constant="6" id="A5A-9K-Jg6"/>
                                                         <constraint firstItem="bXP-Nv-k4f" firstAttribute="leading" secondItem="ngo-bP-tf0" secondAttribute="trailing" constant="8" id="Cv3-fl-KMR"/>
+                                                        <constraint firstAttribute="trailing" secondItem="bXP-Nv-k4f" secondAttribute="trailing" constant="16" id="DhN-yg-1J9"/>
                                                         <constraint firstItem="jin-5H-A5Y" firstAttribute="leading" secondItem="ngo-bP-tf0" secondAttribute="trailing" constant="8" id="RVn-4P-6bZ"/>
                                                         <constraint firstItem="zg8-4B-FpW" firstAttribute="top" secondItem="jin-5H-A5Y" secondAttribute="bottom" constant="4" id="T0P-ly-rEu"/>
                                                         <constraint firstItem="ae3-TX-I3c" firstAttribute="top" secondItem="bXP-Nv-k4f" secondAttribute="bottom" constant="2" id="W8D-11-Duq"/>

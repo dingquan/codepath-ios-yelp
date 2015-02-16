@@ -187,6 +187,8 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         println("searching for " + searchText)
         searchBar.resignFirstResponder()
         self.searchTerm = searchText
+        self.offset = 0;
+        self.businesses.removeAll(keepCapacity: false)
         searchBusinesses(searchText, offset: self.offset, params: self.filters)
     }
     
