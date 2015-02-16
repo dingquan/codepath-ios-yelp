@@ -202,6 +202,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             self.businessTable.reloadData()
             self.offset = self.businesses.count
             self.loadBusinessesOnMap()
+            self.businessTable.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
             self.businessTable.infiniteScrollingView.stopAnimating()
             }, failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                 println(error)
