@@ -103,7 +103,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         self.businessTable.addInfiniteScrollingWithActionHandler({
             println("infinite scroll triggered")
-            self.searchBusinesses(self.searchTerm, offset: self.offset, params: self.filters)
+            self.searchBusinesses(self.searchTerm, offset: self.offset, params: self.filters, fromSearch:false)
             ();
         })
         
@@ -111,7 +111,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         client = YelpClient(consumerKey: yelpConsumerKey, consumerSecret: yelpConsumerSecret, accessToken: yelpToken, accessSecret: yelpTokenSecret)
         
-        searchBusinesses(self.searchTerm, offset: self.offset, params: self.filters)
+        searchBusinesses(self.searchTerm, offset: self.offset, params: self.filters, fromSearch:false)
     }
     
     override func didReceiveMemoryWarning() {
@@ -189,10 +189,10 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.searchTerm = searchText
         self.offset = 0;
         self.businesses.removeAll(keepCapacity: false)
-        searchBusinesses(searchText, offset: self.offset, params: self.filters)
+        searchBusinesses(searchText, offset: self.offset, params: self.filters, fromSearch:true)
     }
     
-    func searchBusinesses(searchTerm:String, offset:Int, params:NSDictionary?){
+    func searchBusinesses(searchTerm:String, offset:Int, params:NSDictionary?, fromSearch:Bool){
         println("search business for term: \(searchTerm) at offset: \(offset) for filters: \(params)")
         client.searchWithTerm(searchTerm, offset: offset, params: params, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
 //            println(response["businesses"])
@@ -202,7 +202,9 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             self.businessTable.reloadData()
             self.offset = self.businesses.count
             self.loadBusinessesOnMap()
-            self.businessTable.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+            if (fromSearch){
+                self.businessTable.scrollToRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+            }
             self.businessTable.infiniteScrollingView.stopAnimating()
             }, failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                 println(error)
@@ -215,7 +217,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // clean previous table results and offset
         self.offset = 0;
         self.businesses.removeAll(keepCapacity: false)
-        searchBusinesses(self.searchTerm, offset: self.offset, params: filters)
+        searchBusinesses(self.searchTerm, offset: self.offset, params: filters, fromSearch: false)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
