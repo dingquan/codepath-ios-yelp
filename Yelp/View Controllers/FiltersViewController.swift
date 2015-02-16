@@ -204,8 +204,8 @@ protocol FiltersViewControllerDelegate : class {
 class FiltersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FiltersTableViewCellDelegate {
     
     weak var delegate:FiltersViewControllerDelegate?
-    var filters:NSDictionary!
-    
+    var filters:NSDictionary! // the filters dictionary passed to ListViewController
+    var expandedSections:NSMutableIndexSet!
     var switchSelections:[NSMutableSet]!
     
     @IBOutlet weak var filtersTable: UITableView!
@@ -213,6 +213,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         filters = NSDictionary()
+        expandedSections = NSMutableIndexSet() as NSMutableIndexSet
         
         switchSelections = [NSMutableSet(), NSMutableSet(), NSMutableSet(), NSMutableSet()]
     }
@@ -250,27 +251,119 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return switchOptions[section].count
+        if section < 2 && !expandedSections.containsIndex(section) {
+            return 1 // only show top row
+        }
+        else {
+            return switchOptions[section].count
+        }
+    }
+    
+    private func fadeInLabel(label: UILabel) -> Void {
+        label.alpha = 0
+        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
+            label.alpha = 1.0
+            }, completion: nil)
+    }
+    
+    private func fadeOutLabel(label: UILabel) -> Void {
+        label.alpha = 1
+        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+            label.alpha = 0
+            }, completion: nil)
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if tableViewCanCollapseSection(indexPath.section) {
+            if indexPath.row == 0 {
+                self.filtersTable.deselectRowAtIndexPath(indexPath, animated: true)
+                var currentlyExpanded:Bool = expandedSections.containsIndex(indexPath.section)
+                var section = indexPath.section
+                var rows: Int
+                var tmpArray:NSMutableArray = NSMutableArray()
+                if currentlyExpanded {
+                    rows = self.tableView(self.filtersTable, numberOfRowsInSection: section)
+                    expandedSections.removeIndex(indexPath.section)
+                }
+                else {
+                    expandedSections.addIndex(indexPath.section)
+                    rows = self.tableView(self.filtersTable, numberOfRowsInSection: section)
+                }
+                var tmpIndexPath:NSIndexPath
+                for (var i = 1; i < rows; i++) {
+                    tmpIndexPath = NSIndexPath(forRow: i, inSection: section)
+                    tmpArray.addObject(tmpIndexPath)
+                }
+                
+                var cell = self.filtersTable.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: section))
+                var selectionName = getSelectionNameInSection(section)
+                var firstRowInSectionName = switchOptions[section][0]["name"]
+                var label = (cell as CheckerTableViewCell).settingsLabel
+                if currentlyExpanded {
+                    self.filtersTable.deleteRowsAtIndexPaths(tmpArray, withRowAnimation: UITableViewRowAnimation.Top)
+                    if selectionName != nil{
+                        label.text = selectionName
+                        fadeInLabel(label)
+                    }
+                }
+                else {
+                    self.filtersTable.insertRowsAtIndexPaths(tmpArray, withRowAnimation: UITableViewRowAnimation.Top)
+                    label.text = firstRowInSectionName
+                    fadeInLabel(label)
+                }
+
+                if (label.text == selectionName){
+                    ((cell as CheckerTableViewCell).settingsSwitch as UIButton).setImage(UIImage(named: "tick"), forState: UIControlState.Normal)
+                }
+                else {
+                    ((cell as CheckerTableViewCell).settingsSwitch as UIButton).setImage(UIImage(named: "white"), forState: UIControlState.Normal)
+                }
+            }
+        }
+        
+    }
+    
+    private func getSelectionNameInSection (section: Int) -> String? {
+        var name:String?
+        for selection in self.switchSelections[section] {
+            name = selection["name"] as? String
+            println("tableViewCellForRowAtIndexPath: \(name)")
+        }
+        return name
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell:UITableViewCell
-        if indexPath.section == 3 {
+        if indexPath.section >= 2 {
             cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as FiltersTableViewCell
             (cell as FiltersTableViewCell).delegate = self
             ((cell as FiltersTableViewCell).settingsSwitch as UISwitch).on = self.switchSelections[indexPath.section].containsObject(switchOptions[indexPath.section][indexPath.row])
             (cell as FiltersTableViewCell).settingsLabel.text = switchOptions[indexPath.section][indexPath.row]["name"]
-
         }
         else {
             cell = tableView.dequeueReusableCellWithIdentifier("CheckerCell", forIndexPath: indexPath) as CheckerTableViewCell
             (cell as CheckerTableViewCell).delegate = self
             ((cell as CheckerTableViewCell).settingsSwitch as UIButton).setImage(UIImage(named: "tick"), forState: UIControlState.Normal)
-            ((cell as CheckerTableViewCell).settingsSwitch as UIButton).setImage(UIImage(named: "white"), forState: UIControlState.Highlighted | UIControlState.Selected | UIControlState.Application)
-            if (!self.switchSelections[indexPath.section].containsObject(switchOptions[indexPath.section][indexPath.row])){
-                ((cell as CheckerTableViewCell).settingsSwitch as UIButton).setImage(UIImage(named: "white"), forState: UIControlState.Normal)
+//            ((cell as CheckerTableViewCell).settingsSwitch as UIButton).setImage(UIImage(named: "white"), forState: UIControlState.Highlighted | UIControlState.Selected | UIControlState.Application)
+
+            var name = getSelectionNameInSection(indexPath.section)
+            var label:UILabel = (cell as CheckerTableViewCell).settingsLabel
+            label.text = ""
+            fadeOutLabel(label)
+            
+            if !expandedSections.containsIndex(indexPath.section) && self.switchSelections[indexPath.section].count > 0 {
+                label.text = name
+                fadeInLabel(label)
             }
-            (cell as CheckerTableViewCell).settingsLabel.text = switchOptions[indexPath.section][indexPath.row]["name"]
+            else {
+                var labelText = switchOptions[indexPath.section][indexPath.row]["name"]
+                label.text = labelText
+                fadeInLabel(label)
+                if (labelText != name) {
+                    ((cell as CheckerTableViewCell).settingsSwitch as UIButton).setImage(UIImage(named: "white"), forState: UIControlState.Normal)
+                }
+            }
         }
 
 //        cell.layer.cornerRadius = 5
@@ -295,6 +388,13 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
         return cell
     }
     
+    func tableViewCanCollapseSection(section: Int) -> Bool {
+        if (section < 2) {
+            return true
+        }
+        return false
+    }
+    
     func filtersView(filtersCell: UITableViewCell, didChangeSwitchValue value:Bool){
         println("FiltersView delegate got the new value: \(value)")
         let indexPath:NSIndexPath = self.filtersTable.indexPathForCell(filtersCell)!
@@ -311,7 +411,38 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
         else {
             self.switchSelections[indexPath.section].removeObject(selection)
         }
-        self.filtersTable.reloadData()
+        
+        collapseSection(indexPath)
+        
+        var sections = NSMutableIndexSet()
+        sections.addIndex(indexPath.section)
+        self.filtersTable.reloadSections(sections, withRowAnimation: UITableViewRowAnimation.Fade)
+    }
+    
+    func collapseSection(indexPath:NSIndexPath) -> Void {
+        if tableViewCanCollapseSection(indexPath.section){
+            // find out unselected rows and collapse them
+            var tmpArray:NSMutableArray = NSMutableArray()
+            var rows = self.tableView(self.filtersTable, numberOfRowsInSection: indexPath.section)
+            var tmpIndexPath:NSIndexPath
+            var selectionNames:NSMutableSet = NSMutableSet()
+            for selection in self.switchSelections[indexPath.section]{
+                var name = (selection as Dictionary<String, String>)["name"]!
+                println("selection name: \(name)")
+                selectionNames.addObject(name)
+            }
+            println("selection names size: \(selectionNames.count)")
+            for (var i = 0; i < rows; i++) {
+                println(switchOptions[indexPath.section][i]["name"]!)
+                if !selectionNames.containsObject(switchOptions[indexPath.section][i]["name"]!) {
+                    tmpIndexPath = NSIndexPath(forRow: i, inSection: indexPath.section)
+                    tmpArray.addObject(tmpIndexPath)
+                }
+            }
+            expandedSections.removeIndex(indexPath.section)
+            self.filtersTable.deleteRowsAtIndexPaths(tmpArray, withRowAnimation: UITableViewRowAnimation.Top)
+            
+        }
     }
     
     func getFilterSelections() -> NSDictionary {
