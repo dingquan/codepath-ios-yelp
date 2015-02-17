@@ -18,7 +18,6 @@
 		463068DE1A8BEE3600C8C184 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463068DD1A8BEE3600C8C184 /* QuartzCore.framework */; };
 		4659D3711A89E1BB008D5228 /* Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4659D3701A89E1BB008D5228 /* Business.swift */; };
 		4659D3741A8AC4A5008D5228 /* BusinessTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4659D3731A8AC4A5008D5228 /* BusinessTableViewCell.swift */; };
-		4659D3761A8AD215008D5228 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4659D3751A8AD215008D5228 /* SwiftyJSON.swift */; };
 		465D4A0E1A8EFCD70096510F /* yelp_launch.png in Resources */ = {isa = PBXBuildFile; fileRef = 465D4A0D1A8EFCD70096510F /* yelp_launch.png */; };
 		465D4A141A8F30BF0096510F /* CheckerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465D4A131A8F30BF0096510F /* CheckerTableViewCell.swift */; };
 		46E71DB91A8C208D001CE097 /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E71DB81A8C208D001CE097 /* FiltersViewController.swift */; };
@@ -53,7 +52,6 @@
 		463068DD1A8BEE3600C8C184 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4659D3701A89E1BB008D5228 /* Business.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Business.swift; sourceTree = "<group>"; };
 		4659D3731A8AC4A5008D5228 /* BusinessTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessTableViewCell.swift; sourceTree = "<group>"; };
-		4659D3751A8AD215008D5228 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		465D4A0D1A8EFCD70096510F /* yelp_launch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yelp_launch.png; sourceTree = "<group>"; };
 		465D4A131A8F30BF0096510F /* CheckerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckerTableViewCell.swift; sourceTree = "<group>"; };
 		46E71DB81A8C208D001CE097 /* FiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FiltersViewController.swift; path = "View Controllers/FiltersViewController.swift"; sourceTree = "<group>"; };
@@ -204,7 +202,6 @@
 			children = (
 				4604FCBC1A8E623500DDD4E9 /* MapKit.framework */,
 				463068DD1A8BEE3600C8C184 /* QuartzCore.framework */,
-				4659D3751A8AD215008D5228 /* SwiftyJSON.swift */,
 				C56EF0CE844A4EE5819C72AF /* libPods.a */,
 			);
 			name = Frameworks;
@@ -350,7 +347,6 @@
 				46E71DB91A8C208D001CE097 /* FiltersViewController.swift in Sources */,
 				4659D3711A89E1BB008D5228 /* Business.swift in Sources */,
 				465D4A141A8F30BF0096510F /* CheckerTableViewCell.swift in Sources */,
-				4659D3761A8AD215008D5228 /* SwiftyJSON.swift in Sources */,
 				222D8A7D19CCFAE000D2DB53 /* YelpClient.swift in Sources */,
 				46E71DBB1A8C20B3001CE097 /* ListViewController.swift in Sources */,
 				222D8A5B19CCF9F900D2DB53 /* AppDelegate.swift in Sources */,

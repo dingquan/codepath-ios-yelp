@@ -25,32 +25,32 @@ class Business {
     
     class func businessWithDictionary(dictionary:NSDictionary) -> Business {
         var business:Business = Business()
-        business.name = dictionary["name"] as NSString
-        business.imageUrl = dictionary["image_url"] as NSString
-        business.ratingImageUrl = dictionary["rating_img_url"] as NSString
+        business.name = dictionary["name"] as? String
+        business.imageUrl = dictionary["image_url"] as? String
+        business.ratingImageUrl = dictionary["rating_img_url"] as? String
         business.numReviews = dictionary["review_count"] as? NSInteger
         var categoryArr = [String]()
-        var tmpCatArr = dictionary["categories"] as NSArray
-        for aCategory in dictionary["categories"] as NSArray{
-            categoryArr.append(aCategory[0] as NSString)
+        var tmpCatArr = dictionary["categories"] as! NSArray
+        for aCategory in dictionary["categories"] as! NSArray{
+            categoryArr.append(aCategory[0] as! String)
         }
         business.categories = ", ".join(categoryArr)
-        var location = dictionary["location"] as NSDictionary
+        var location = dictionary["location"] as! NSDictionary
 //        var street = (location["address"] as NSArray)[0] as NSString
 //        var neighborhood = (location["neighborhoods"] as NSArray)[0] as NSString
 //        business.address = "\(street), \(neighborhood)"
-        business.address = (location["display_address"] as NSArray)[0] as NSString
-        var coordinates = location["coordinate"] as NSDictionary
-        business.latitude = (coordinates["latitude"] as NSNumber).floatValue
-        business.longitude = (coordinates["longitude"] as NSNumber).floatValue
-        business.distance = (dictionary["distance"] as NSNumber).floatValue * 0.000621371
+        business.address = (location["display_address"] as! NSArray)[0] as! String
+        var coordinates = location["coordinate"] as! NSDictionary
+        business.latitude = (coordinates["latitude"] as! NSNumber).floatValue
+        business.longitude = (coordinates["longitude"] as! NSNumber).floatValue
+        business.distance = (dictionary["distance"] as! NSNumber).floatValue * 0.000621371
         return business
     }
     
     class func businessesWithDictionaries(dictionaries:NSArray) -> [Business]{
         var businesses = [Business]()
         for dictionary in dictionaries {
-            var business = Business.businessWithDictionary(dictionary as NSDictionary)
+            var business = Business.businessWithDictionary(dictionary as! NSDictionary)
             businesses.append(business)
         }
         return businesses

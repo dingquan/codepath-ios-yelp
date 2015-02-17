@@ -160,7 +160,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("BusinessCell", forIndexPath: indexPath) as BusinessTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("BusinessCell", forIndexPath: indexPath) as! BusinessTableViewCell
         
         // change the default margin of the table divider length
         if (cell.respondsToSelector(Selector("setPreservesSuperviewLayoutMargins:"))){
@@ -196,7 +196,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         println("search business for term: \(searchTerm) at offset: \(offset) for filters: \(params)")
         client.searchWithTerm(searchTerm, offset: offset, params: params, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
 //            println(response["businesses"])
-            var newBusinessRecords = Business.businessesWithDictionaries(response["businesses"] as NSArray)
+            var newBusinessRecords = Business.businessesWithDictionaries(response["businesses"] as! NSArray)
             println("fetched \(newBusinessRecords.count) records")
             self.businesses = self.businesses + newBusinessRecords
             self.businessTable.reloadData()

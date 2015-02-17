@@ -281,7 +281,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
                 var currentlyExpanded:Bool = expandedSections.containsIndex(indexPath.section)
                 var section = indexPath.section
                 var rows: Int
-                var tmpArray:NSMutableArray = NSMutableArray()
+                var tmpArray:[AnyObject] = [AnyObject]()
                 if currentlyExpanded {
                     rows = self.tableView(self.filtersTable, numberOfRowsInSection: section)
                     expandedSections.removeIndex(indexPath.section)
@@ -293,13 +293,13 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
                 var tmpIndexPath:NSIndexPath
                 for (var i = 1; i < rows; i++) {
                     tmpIndexPath = NSIndexPath(forRow: i, inSection: section)
-                    tmpArray.addObject(tmpIndexPath)
+                    tmpArray.append(tmpIndexPath)
                 }
                 
                 var cell = self.filtersTable.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: section))
                 var selectionName = getSelectionNameInSection(section)
                 var firstRowInSectionName = switchOptions[section][0]["name"]
-                var label = (cell as CheckerTableViewCell).settingsLabel
+                var label = (cell as! CheckerTableViewCell).settingsLabel
                 if currentlyExpanded {
                     self.filtersTable.deleteRowsAtIndexPaths(tmpArray, withRowAnimation: UITableViewRowAnimation.Top)
                     if selectionName != nil{
@@ -314,10 +314,10 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
                 }
 
                 if (label.text == selectionName){
-                    ((cell as CheckerTableViewCell).settingsSwitch as UIButton).setImage(UIImage(named: "tick"), forState: UIControlState.Normal)
+                    ((cell as! CheckerTableViewCell).settingsSwitch as! UIButton).setImage(UIImage(named: "tick"), forState: UIControlState.Normal)
                 }
                 else {
-                    ((cell as CheckerTableViewCell).settingsSwitch as UIButton).setImage(UIImage(named: "white"), forState: UIControlState.Normal)
+                    ((cell as! CheckerTableViewCell).settingsSwitch as! UIButton).setImage(UIImage(named: "white"), forState: UIControlState.Normal)
                 }
             }
         }
@@ -336,19 +336,19 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell:UITableViewCell
         if indexPath.section >= 2 {
-            cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as FiltersTableViewCell
-            (cell as FiltersTableViewCell).delegate = self
-            ((cell as FiltersTableViewCell).settingsSwitch as UISwitch).on = self.switchSelections[indexPath.section].containsObject(switchOptions[indexPath.section][indexPath.row])
-            (cell as FiltersTableViewCell).settingsLabel.text = switchOptions[indexPath.section][indexPath.row]["name"]
+            cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! FiltersTableViewCell
+            (cell as! FiltersTableViewCell).delegate = self
+            ((cell as! FiltersTableViewCell).settingsSwitch as! UISwitch).on = self.switchSelections[indexPath.section].containsObject(switchOptions[indexPath.section][indexPath.row])
+            (cell as! FiltersTableViewCell).settingsLabel.text = switchOptions[indexPath.section][indexPath.row]["name"]
         }
         else {
-            cell = tableView.dequeueReusableCellWithIdentifier("CheckerCell", forIndexPath: indexPath) as CheckerTableViewCell
-            (cell as CheckerTableViewCell).delegate = self
-            ((cell as CheckerTableViewCell).settingsSwitch as UIButton).setImage(UIImage(named: "tick"), forState: UIControlState.Normal)
+            cell = tableView.dequeueReusableCellWithIdentifier("CheckerCell", forIndexPath: indexPath) as! CheckerTableViewCell
+            (cell as! CheckerTableViewCell).delegate = self
+            ((cell as! CheckerTableViewCell).settingsSwitch as! UIButton).setImage(UIImage(named: "tick"), forState: UIControlState.Normal)
 //            ((cell as CheckerTableViewCell).settingsSwitch as UIButton).setImage(UIImage(named: "white"), forState: UIControlState.Highlighted | UIControlState.Selected | UIControlState.Application)
 
             var name = getSelectionNameInSection(indexPath.section)
-            var label:UILabel = (cell as CheckerTableViewCell).settingsLabel
+            var label:UILabel = (cell as! CheckerTableViewCell).settingsLabel
             label.text = ""
             fadeOutLabel(label)
             
@@ -361,7 +361,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
                 label.text = labelText
                 fadeInLabel(label)
                 if (labelText != name) {
-                    ((cell as CheckerTableViewCell).settingsSwitch as UIButton).setImage(UIImage(named: "white"), forState: UIControlState.Normal)
+                    ((cell as! CheckerTableViewCell).settingsSwitch as! UIButton).setImage(UIImage(named: "white"), forState: UIControlState.Normal)
                 }
             }
         }
@@ -422,12 +422,12 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     func collapseSection(indexPath:NSIndexPath) -> Void {
         if tableViewCanCollapseSection(indexPath.section){
             // find out unselected rows and collapse them
-            var tmpArray:NSMutableArray = NSMutableArray()
+            var tmpArray:[AnyObject] = [AnyObject]()
             var rows = self.tableView(self.filtersTable, numberOfRowsInSection: indexPath.section)
             var tmpIndexPath:NSIndexPath
             var selectionNames:NSMutableSet = NSMutableSet()
             for selection in self.switchSelections[indexPath.section]{
-                var name = (selection as Dictionary<String, String>)["name"]!
+                var name = (selection as! Dictionary<String, String>)["name"]!
                 println("selection name: \(name)")
                 selectionNames.addObject(name)
             }
@@ -436,7 +436,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
                 println(switchOptions[indexPath.section][i]["name"]!)
                 if !selectionNames.containsObject(switchOptions[indexPath.section][i]["name"]!) {
                     tmpIndexPath = NSIndexPath(forRow: i, inSection: indexPath.section)
-                    tmpArray.addObject(tmpIndexPath)
+                    tmpArray.append(tmpIndexPath)
                 }
             }
             expandedSections.removeIndex(indexPath.section)
@@ -451,13 +451,13 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
         // process the sorting option
         if self.switchSelections[0].count > 0 {
             for selection in self.switchSelections[0] {
-                filters["sort"] = selection["code"] as NSString
+                filters["sort"] = selection["code"] as! String
             }
         }
         // process radius option
         if self.switchSelections[1].count > 0 {
             for selection in self.switchSelections[1] {
-                filters["radius_filter"] = selection["code"] as NSString
+                filters["radius_filter"] = selection["code"] as! String
             }
         }
         // process deals option
@@ -468,7 +468,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
         if self.switchSelections[3].count > 0 {
             var selectedCategories:[String] = []
             for selection in self.switchSelections[3] {
-                selectedCategories.append(selection["code"] as NSString)
+                selectedCategories.append(selection["code"] as! String)
             }
             filters["category_filter"] = ",".join(selectedCategories)
         }
