@@ -27,7 +27,7 @@ class FiltersTableViewCell: UITableViewCell, YelpTableViewCell{
     
     @IBAction func switchValueChanged(sender: AnyObject) {
         let settingsSwitch = self.settingsSwitch as! UISwitch
-        println("switch for label \"\(settingsLabel.text!)\" has changed to \(settingsSwitch.on)")
+        print("switch for label \"\(settingsLabel.text!)\" has changed to \(settingsSwitch.on)")
         delegate?.filtersView(self, didChangeSwitchValue: settingsSwitch.on)
     }
     

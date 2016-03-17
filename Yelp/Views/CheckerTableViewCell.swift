@@ -17,7 +17,7 @@ class CheckerTableViewCell: UITableViewCell, YelpTableViewCell {
 
     
     @IBAction func switchValueChanged(sender: AnyObject) {
-        println("switch for label \"\(settingsLabel.text!)\" has changed to true")
+        print("switch for label \"\(settingsLabel.text!)\" has changed to true")
         delegate?.filtersView(self, didChangeSwitchValue: true)
     }
     

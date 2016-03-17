@@ -34,14 +34,14 @@ class BusinessTableViewCell: UITableViewCell {
                 self.thumbnailImg.layer.cornerRadius = 5
                 self.thumbnailImg.clipsToBounds = true
 //                self.thumbnailImg.setImageWithURL(NSURL(string: thumbnailUrl))
-                var urlReq = NSURLRequest(URL: NSURL(string: thumbnailUrl)!)
+                let urlReq = NSURLRequest(URL: NSURL(string: thumbnailUrl)!)
                 self.thumbnailImg.setImageWithURLRequest(urlReq, placeholderImage: UIImage(named: "white"),
                     success: { (request: NSURLRequest!, response: NSHTTPURLResponse!, image:UIImage!) -> Void in
                         self.thumbnailImg.alpha = 0.0
                         self.thumbnailImg.image = image
                         UIView.animateWithDuration(0.25, animations: {self.thumbnailImg.alpha = 1.0 })
                     }, failure: { (request:NSURLRequest!, response:NSHTTPURLResponse!, error:NSError!) -> Void in
-                        println(error)
+                        print(error)
                 })
 
             }

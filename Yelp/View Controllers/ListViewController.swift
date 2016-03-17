@@ -28,7 +28,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     let yelpToken = "YMx-5O3SU7CYzlHVL8CsiYAxJw56vFz7"
     let yelpTokenSecret = "lyLY6vjfok_RfCkJ4c7lSDmqJB8"
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.searchTerm = "food"
         self.offset = 0
@@ -51,7 +51,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //                ])
             
             self.listMapToggle.title = "List"
-            UIView.transitionFromView(self.businessTable, toView: self.businessMap, duration: 1.0, options: UIViewAnimationOptions.TransitionFlipFromLeft | UIViewAnimationOptions.ShowHideTransitionViews, completion: { (animationFlag:Bool) -> Void in
+            UIView.transitionFromView(self.businessTable, toView: self.businessMap, duration: 1.0, options: [UIViewAnimationOptions.TransitionFlipFromLeft, UIViewAnimationOptions.ShowHideTransitionViews], completion: { (animationFlag:Bool) -> Void in
                 
                 //self.businessTable.removeFromSuperview()
                 
@@ -75,7 +75,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             self.listMapToggle.title = "Map"
             
             
-            UIView.transitionFromView(self.businessMap, toView: self.businessTable, duration: 1.0, options: UIViewAnimationOptions.TransitionFlipFromLeft | UIViewAnimationOptions.ShowHideTransitionViews, completion: { (animationFlag:Bool) -> Void in
+            UIView.transitionFromView(self.businessMap, toView: self.businessTable, duration: 1.0, options: [UIViewAnimationOptions.TransitionFlipFromLeft, UIViewAnimationOptions.ShowHideTransitionViews], completion: { (animationFlag:Bool) -> Void in
                 
                 //self.businessMap.removeFromSuperview()
             })
@@ -102,7 +102,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.businessTable.rowHeight = UITableViewAutomaticDimension
         
         self.businessTable.addInfiniteScrollingWithActionHandler({
-            println("infinite scroll triggered")
+            print("infinite scroll triggered")
             self.searchBusinesses(self.searchTerm, offset: self.offset, params: self.filters, fromSearch:false)
             ();
         })
@@ -180,24 +180,22 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar){
-        var searchText:String = searchBar.text
-        if searchText.isEmpty{
-            return
+        if let searchText = searchBar.text {
+            print("searching for " + searchText)
+            searchBar.resignFirstResponder()
+            self.searchTerm = searchText
+            self.offset = 0;
+            self.businesses.removeAll(keepCapacity: false)
+            searchBusinesses(searchText, offset: self.offset, params: self.filters, fromSearch:true)
         }
-        println("searching for " + searchText)
-        searchBar.resignFirstResponder()
-        self.searchTerm = searchText
-        self.offset = 0;
-        self.businesses.removeAll(keepCapacity: false)
-        searchBusinesses(searchText, offset: self.offset, params: self.filters, fromSearch:true)
     }
     
     func searchBusinesses(searchTerm:String, offset:Int, params:NSDictionary?, fromSearch:Bool){
-        println("search business for term: \(searchTerm) at offset: \(offset) for filters: \(params)")
+        print("search business for term: \(searchTerm) at offset: \(offset) for filters: \(params)")
         client.searchWithTerm(searchTerm, offset: offset, params: params, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
 //            println(response["businesses"])
             var newBusinessRecords = Business.businessesWithDictionaries(response["businesses"] as! NSArray)
-            println("fetched \(newBusinessRecords.count) records")
+            print("fetched \(newBusinessRecords.count) records")
             self.businesses = self.businesses + newBusinessRecords
             self.businessTable.reloadData()
             self.offset = self.businesses.count
@@ -207,12 +205,11 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
             self.businessTable.infiniteScrollingView.stopAnimating()
             }, failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
-                println(error)
+                print(error)
         })
     }
     
     func didChangeFilters(filtersViewcontroller:FiltersViewController, filters:NSDictionary){
-        println("Filter has changed: \(filters)")
         self.filters = filters
         // clean previous table results and offset
         self.offset = 0;
@@ -240,12 +237,12 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId)
         if pinView == nil {
             pinView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            pinView.image = UIImage(named:"pin")
-            pinView.canShowCallout = true
+            pinView?.image = UIImage(named:"pin")
+            pinView?.canShowCallout = true
         }
         else {
             //we are re-using a view, update its annotation reference...
-            pinView.annotation = annotation
+            pinView?.annotation = annotation
         }
         
         return pinView

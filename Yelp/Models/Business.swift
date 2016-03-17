@@ -34,7 +34,7 @@ class Business {
         for aCategory in dictionary["categories"] as! NSArray{
             categoryArr.append(aCategory[0] as! String)
         }
-        business.categories = ", ".join(categoryArr)
+        business.categories = categoryArr.joinWithSeparator(",")
         var location = dictionary["location"] as! NSDictionary
 //        var street = (location["address"] as NSArray)[0] as NSString
 //        var neighborhood = (location["neighborhoods"] as NSArray)[0] as NSString

@@ -210,7 +210,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     
     @IBOutlet weak var filtersTable: UITableView!
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         filters = NSDictionary()
         expandedSections = NSMutableIndexSet() as NSMutableIndexSet
@@ -219,7 +219,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     @IBAction func onSearch(sender: AnyObject) {
-        println("onSearch")
+        print("onSearch")
         
         self.dismissViewControllerAnimated(true, completion: nil)
         self.filters = getFilterSelections()
@@ -227,7 +227,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     @IBAction func onCancel(sender: AnyObject) {
-        println("onCancel")
+        print("onCancel")
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -278,10 +278,10 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
         if tableViewCanCollapseSection(indexPath.section) {
             if indexPath.row == 0 {
                 self.filtersTable.deselectRowAtIndexPath(indexPath, animated: true)
-                var currentlyExpanded:Bool = expandedSections.containsIndex(indexPath.section)
-                var section = indexPath.section
+                let currentlyExpanded:Bool = expandedSections.containsIndex(indexPath.section)
+                let section = indexPath.section
                 var rows: Int
-                var tmpArray:[AnyObject] = [AnyObject]()
+                var tmpArray:[NSIndexPath] = [NSIndexPath]()
                 if currentlyExpanded {
                     rows = self.tableView(self.filtersTable, numberOfRowsInSection: section)
                     expandedSections.removeIndex(indexPath.section)
@@ -296,10 +296,10 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
                     tmpArray.append(tmpIndexPath)
                 }
                 
-                var cell = self.filtersTable.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: section))
-                var selectionName = getSelectionNameInSection(section)
-                var firstRowInSectionName = switchOptions[section][0]["name"]
-                var label = (cell as! CheckerTableViewCell).settingsLabel
+                let cell = self.filtersTable.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: section))
+                let selectionName = getSelectionNameInSection(section)
+                let firstRowInSectionName = switchOptions[section][0]["name"]
+                let label = (cell as! CheckerTableViewCell).settingsLabel
                 if currentlyExpanded {
                     self.filtersTable.deleteRowsAtIndexPaths(tmpArray, withRowAnimation: UITableViewRowAnimation.Top)
                     if selectionName != nil{
@@ -328,7 +328,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
         var name:String?
         for selection in self.switchSelections[section] {
             name = selection["name"] as? String
-            println("tableViewCellForRowAtIndexPath: \(name)")
+            print("tableViewCellForRowAtIndexPath: \(name)")
         }
         return name
     }
@@ -347,8 +347,8 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
             ((cell as! CheckerTableViewCell).settingsSwitch as! UIButton).setImage(UIImage(named: "tick"), forState: UIControlState.Normal)
 //            ((cell as CheckerTableViewCell).settingsSwitch as UIButton).setImage(UIImage(named: "white"), forState: UIControlState.Highlighted | UIControlState.Selected | UIControlState.Application)
 
-            var name = getSelectionNameInSection(indexPath.section)
-            var label:UILabel = (cell as! CheckerTableViewCell).settingsLabel
+            let name = getSelectionNameInSection(indexPath.section)
+            let label:UILabel = (cell as! CheckerTableViewCell).settingsLabel
             label.text = ""
             fadeOutLabel(label)
             
@@ -357,7 +357,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
                 fadeInLabel(label)
             }
             else {
-                var labelText = switchOptions[indexPath.section][indexPath.row]["name"]
+                let labelText = switchOptions[indexPath.section][indexPath.row]["name"]
                 label.text = labelText
                 fadeInLabel(label)
                 if (labelText != name) {
@@ -396,11 +396,11 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func filtersView(filtersCell: UITableViewCell, didChangeSwitchValue value:Bool){
-        println("FiltersView delegate got the new value: \(value)")
+        print("FiltersView delegate got the new value: \(value)")
         let indexPath:NSIndexPath = self.filtersTable.indexPathForCell(filtersCell)!
         let selection = switchOptions[indexPath.section][indexPath.row]
         
-        println(( value ? "Add" : "Remove" ) + " selection: \(selection)")
+        print(( value ? "Add" : "Remove" ) + " selection: \(selection)")
         if (value){
             if (indexPath.section != 3){ // not a food category selection
                 // need to clean up all previous on selections
@@ -414,7 +414,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
         
         collapseSection(indexPath)
         
-        var sections = NSMutableIndexSet()
+        let sections = NSMutableIndexSet()
         sections.addIndex(indexPath.section)
         self.filtersTable.reloadSections(sections, withRowAnimation: UITableViewRowAnimation.Fade)
     }
@@ -422,18 +422,18 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     func collapseSection(indexPath:NSIndexPath) -> Void {
         if tableViewCanCollapseSection(indexPath.section){
             // find out unselected rows and collapse them
-            var tmpArray:[AnyObject] = [AnyObject]()
-            var rows = self.tableView(self.filtersTable, numberOfRowsInSection: indexPath.section)
+            var tmpArray:[NSIndexPath] = [NSIndexPath]()
+            let rows = self.tableView(self.filtersTable, numberOfRowsInSection: indexPath.section)
             var tmpIndexPath:NSIndexPath
-            var selectionNames:NSMutableSet = NSMutableSet()
+            let selectionNames:NSMutableSet = NSMutableSet()
             for selection in self.switchSelections[indexPath.section]{
-                var name = (selection as! Dictionary<String, String>)["name"]!
-                println("selection name: \(name)")
+                let name = (selection as! Dictionary<String, String>)["name"]!
+                print("selection name: \(name)")
                 selectionNames.addObject(name)
             }
-            println("selection names size: \(selectionNames.count)")
+            print("selection names size: \(selectionNames.count)")
             for (var i = 0; i < rows; i++) {
-                println(switchOptions[indexPath.section][i]["name"]!)
+                print(switchOptions[indexPath.section][i]["name"]!)
                 if !selectionNames.containsObject(switchOptions[indexPath.section][i]["name"]!) {
                     tmpIndexPath = NSIndexPath(forRow: i, inSection: indexPath.section)
                     tmpArray.append(tmpIndexPath)
@@ -446,7 +446,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func getFilterSelections() -> NSDictionary {
-        var filters = NSMutableDictionary()
+        let filters = NSMutableDictionary()
 
         // process the sorting option
         if self.switchSelections[0].count > 0 {
@@ -470,7 +470,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
             for selection in self.switchSelections[3] {
                 selectedCategories.append(selection["code"] as! String)
             }
-            filters["category_filter"] = ",".join(selectedCategories)
+            filters["category_filter"] = selectedCategories.joinWithSeparator(",")
         }
         return filters;
     }
